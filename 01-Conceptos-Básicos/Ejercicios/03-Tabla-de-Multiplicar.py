@@ -7,9 +7,14 @@
 #################################################
 
 numero = int(input("Introduce el número para generar su tabla de multiplicar: "))
-for veces in range(0, 11, 1):
-    resultado = numero * veces
-    print(f"{numero} x {veces} = {resultado}")
+
+try:
+    for veces in range(0, 11, 1):
+        resultado = numero * veces
+        print(f"{numero} x {veces} = {resultado}")
+except:
+    print("Introduzca un número entero.")
+    exit()
 
 print("")
 
