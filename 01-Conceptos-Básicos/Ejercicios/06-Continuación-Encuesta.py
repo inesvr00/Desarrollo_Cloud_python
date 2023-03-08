@@ -69,5 +69,5 @@ if len(lista_55) == 0:
     print("No existen participantes mayores de 55 años.")
 else: 
     media_pun_55 = sum(lista_55) / len(lista_55)
-    print(f"La puntuación media de personas menores de 18 años es {media_pun_55} para {len(lista_55)} encuestados.")
+    print(f"La puntuación media de personas mayores de 55 años es {media_pun_55} para {len(lista_55)} encuestados.")
            

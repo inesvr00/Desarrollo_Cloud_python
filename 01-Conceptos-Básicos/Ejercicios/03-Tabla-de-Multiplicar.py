@@ -8,6 +8,7 @@
 
 numero = int(input("Introduce el número para generar su tabla de multiplicar: "))
 
+# Ejemplo utilizando FOR
 try:
     for veces in range(0, 11, 1):
         resultado = numero * veces
@@ -18,6 +19,7 @@ except:
 
 print("")
 
+# Ejemplo utilizando WHILE
 contador = 0
 while contador < 11:
     result = numero * contador
