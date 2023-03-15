@@ -68,28 +68,70 @@ cursor = db.Products.aggregate(query)
 print(cursor.next())
 
 
-# order_id = 10248
-# order = db.Orders.find_one({"OrderID": order_id})
-# print("ShipName:", order["ShipName"])
-# print("ShipAddress:", order["ShipAddress"])
-# print("ShipCity:", order["ShipCity"])
-# print("ShipCountry:", order["ShipCountry"])
-# print("OrderDate:", order["OrderDate"])
-# print("ShipDate:", order["ShippedDate"])
+#######################################################################
+# Requerimientos funcionales:
+#
+#   -> Mostrar información ordenada y detallada de un pedido
+#   -> Mostrar: ShipName, ShipAddress, ShipCity, ShipCountry, OrderDate, ShipDate
+#   -> Mostrar: Producto, Cantidad, Precio, Precio Total linea
+#   -> Mostrar: Total del Pedido
+#######################################################################
 
-# order_details = db.OrderDetails.find({"OrderID": order_id})
-# total_order = 0
-# for order_detail in order_details:
-#     product = db.Products.find_one({"ProductID": order_detail["ProductID"]})
-#     quantity = order_detail["Quantity"]
-#     price = order_detail["UnitPrice"]
-#     total_price = quantity * price
-#     total_order += total_price
-#     print("Producto:", product["ProductName"])
-#     print("Cantidad:", quantity)
-#     print("Precio:", price)
-#     print("Precio total:", total_price)
+from pymongo import MongoClient
 
-# print("Total pedido:", total_order)
+# Cliente
+client = MongoClient('mongodb://localhost:27017/')
+
+# Base de Datos
+db = client.Northwind
+
+# Colecciones
+orders = db.Orders
+details = db.Order_Details
+products = db.Products
+
+
+idPedido = input("Identificador del Pedido: ")
+
+pedido = orders.find_one({'OrderID': idPedido})
+if (pedido != None):
+    print(f"===============================================================")
+    print(f" DATOS DEL PEDIDO {idPedido}")
+    print(f"===============================================================")
+    print(f" Entregar : {pedido['ShipName']}")
+    print(f"            {pedido['ShipAddress']}")
+    print(f"            {pedido['ShipCity']} ({pedido['ShipCountry']})")
+    print("")
+    print(f"    Fecha : {pedido['OrderDate']}")
+    print(f"  Enviado : {pedido['ShippedDate']}")
+    # Buscamos el detalle del pedido
+    detalle = details.find({'OrderID':  idPedido})
+    print(f"===============================================================")
+    print(f"  {'Producto':<31} {'Cant. '} {'Precio':>10} {'Total':>10}")
+    print(f"===============================================================")
+
+    totalPedido = 0
+
+    # Recorremos con While el curso del detalle del pedido
+    while (detalle.alive):
+        linea = detalle.next()
+        # Buscasmos y mostramos la descripción del producto, utilizando ProductID
+        producto = products.find_one({'ProductID': linea['ProductID']})
+        # Mostramos cada linea de pedido
+        # Descripción  -  cantidad  - precio  -  precio * cantidad
+        totalLinea = int(linea['Quantity']) * float(linea['UnitPrice'])
+        totalPedido += totalLinea
+
+        totalFormat = "{:0.2f}".format(totalLinea)
+
+        print(
+            f"  {producto['ProductName']:<31} {linea['Quantity']:>6} {linea['UnitPrice']:>10} {totalFormat:>10}")
+
+    # Mostar el importe total del pedido
+    print(f"===============================================================")
+    totalPedidoFormat = "{:0.2f}".format(totalPedido)
+    print(f"  {'TOTAL':>49} {totalPedidoFormat:>10}")
+else:
+    print(f"El pedido {idPedido} no existe.")
 
 
