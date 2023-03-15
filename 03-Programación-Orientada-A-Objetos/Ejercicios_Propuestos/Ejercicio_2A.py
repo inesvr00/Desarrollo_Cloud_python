@@ -15,10 +15,6 @@ def celsius_a_fahrenheit (celc):
     return fahr
 
 def fahrenheit_a_celsius(fahrenheit):
-    """
-    Convierte una temperatura en grados Fahrenheit a grados Celsius.
-    La fórmula utilizada es: (F - 32) * 5/9, donde F es la temperatura en Fahrenheit.
-    """
     celsius = (fahrenheit - 32) * 5 / 9
     return celsius
 

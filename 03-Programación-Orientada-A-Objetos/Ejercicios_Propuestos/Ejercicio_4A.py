@@ -15,6 +15,7 @@ def contar_vocales(frase):
             vocales[letra.lower()] += 1
     for vocal, cantidad in vocales.items():
         print(f"{vocal}: {cantidad}")
-        
+
+
 frase = "Hola me llamo Inés"
 contar_vocales(frase)

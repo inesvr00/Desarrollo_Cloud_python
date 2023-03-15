@@ -13,15 +13,15 @@
 
 # Datos desglosados
 
-def Calculadora_De_Impuestos (ingresos):
+def Calculadora_De_Impuestos(ingresos):
     try:
-        ingresos = int(ingresos)
+        ingresos = float(ingresos)
     except ValueError:
         return "El ingreso debe ser un número entero o decimal"
-    
+
     if ingresos < 0:
         return "El salario no puede ser negativo"
-    
+    # Pero claro, al parecer esta gente tiene ingresos, esto está mal
     elif ingresos == 0:
         estado = input("Introduce si estás desempleado o eres estudiante: ").lower()
         if estado == "desempleado":
@@ -52,5 +52,6 @@ def Calculadora_De_Impuestos (ingresos):
             impuesto = ingresos * 0.45
 
         return f"El impuesto a pagar es del {porcentaje}%, por que el impuesto total sobre el sueldo de {ingresos}€ es de {impuesto}€"
-    
+
+
 print(Calculadora_De_Impuestos(25000))

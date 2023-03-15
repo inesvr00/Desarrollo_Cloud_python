@@ -13,8 +13,14 @@ def Consumo(km = None, litros = None):
     if None in (km, litros):
         raise ValueError("Se requieren dos argumentos: km y litros")
     
-    consumo = litros / km
+    if not isinstance(km, (int, float)) or not isinstance(litros, (int, float)):
+        raise TypeError("Ambos argumentos deben ser números")
+    
+    try:
+        consumo = litros / km
+    except ZeroDivisionError:
+        raise ValueError("El valor de km no puede ser cero")
     
     print(f"El consumo de este coche es de {consumo} l/km")
     
-Consumo(100, 5)
+Consumo('hola', 5)
